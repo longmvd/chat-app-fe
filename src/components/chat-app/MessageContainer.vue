@@ -3,7 +3,7 @@
     <div v-for="(message, index) in messages">
       <table>
         <tr :key="index">
-          <td>{{ message.Message }} - {{ message.Username }}</td>
+          <td>{{ message.Content }} - {{ message.Username }}</td>
         </tr>
       </table>
     </div>

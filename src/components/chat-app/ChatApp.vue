@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-if="connection">
-      <chat-room></chat-room>
+      <chat-room
+        v-model:messages="messages"
+        @send-message="sendMessage"
+      ></chat-room>
     </div>
     <div v-else>
       <waiting-room @join-chat-room="joinChatRoom"></waiting-room>
@@ -11,6 +14,7 @@
 
 <script setup lang="ts">
 import { UserConnection } from '@/entities/connection';
+import { Message } from '@/entities/message';
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -22,6 +26,8 @@ import WaitingRoom from './WaitingRoom.vue';
 
 const connection = ref<HubConnection>();
 
+const messages = ref<Message[]>([]);
+
 async function joinChatRoom(userConnection: UserConnection) {
   try {
     if (!connection.value) {
@@ -30,14 +36,33 @@ async function joinChatRoom(userConnection: UserConnection) {
         .configureLogging(LogLevel.Information)
         .build();
       conn.on('ReceiveMessage', (user, message) => {
-        console.log(user, message.toString());
+        messages.value = [
+          ...(messages.value as any),
+          { Content: message, Username: user },
+        ];
+      });
+
+      conn.on('GetRoomMessages', (message) => {
+        console.log('GetRoomMessages', message);
+
+        if (message) {
+          let receivedMessages = JSON.parse(message);
+          console.log(receivedMessages);
+
+          messages.value = [...(messages.value as any), ...receivedMessages];
+        }
       });
 
       conn.on('ReceiveSpecificMessage', (user, message) => {
         console.log(user, message.toString());
+        messages.value = [
+          ...(messages.value as any),
+          { Content: message, Username: user },
+        ];
       });
       await conn.start();
       await conn.invoke('JoinSpecificChatRoom', userConnection);
+      await conn.invoke('GetMessagesByRoom', userConnection);
       connection.value = conn;
     }
   } catch (e) {
@@ -51,7 +76,16 @@ interface SendingMessage {
   Recipient?: string;
 }
 
-function sendMessage(sendingMessage: SendingMessage) {}
+async function sendMessage(message: string) {
+  try {
+    debugger;
+    if (connection.value) {
+      await connection.value.invoke('SendMessage', message);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

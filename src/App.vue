@@ -1,9 +1,7 @@
-<script setup lang="ts">
-import ChatApp from './components/chat-app/ChatApp.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <chat-app></chat-app>
+  <router-view></router-view>
 </template>
 
 <style scoped>

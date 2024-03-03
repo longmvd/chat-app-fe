@@ -10,13 +10,26 @@
   },
   "dependencies": {
     "@microsoft/signalr": "^8.0.0",
-    "vue": "^3.4.15"
+    "ant-design-vue": "^4.1.2",
+    "axios": "^1.6.7",
+    "lodash": "^4.17.21",
+    "mitt": "^3.0.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.15",
+    "vue-i18n": "^9.9.0",
+    "vue-router": "^4.3.0",
+    "vue-virtual-scroller": "^2.0.0-beta.8"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.20",
+    "@types/vue-virtual-scroller": "npm:@vsme/vue-virtual-scroller@^1.0.1",
     "@vitejs/plugin-vue": "^5.0.3",
     "autoprefixer": "^10.4.17",
+    "node-sass": "^9.0.0",
     "postcss": "^8.4.35",
+    "sass": "^1.71.1",
+    "sass-loader": "^14.1.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",

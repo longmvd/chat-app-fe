@@ -18,6 +18,8 @@
       "DOM.Iterable"
     ],
     "skipLibCheck": true,
+    "allowJs": true,
+    "noImplicitAny": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
