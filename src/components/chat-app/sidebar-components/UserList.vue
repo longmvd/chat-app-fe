@@ -1,23 +1,20 @@
 <template>
-  <RecycleScroller
+  <recycle-scroller
     class="user-list h-screen list-none"
     :items="users"
     :item-size="78"
     key-field="ID"
     :infinite-scroll-disabled="busy"
     :infinite-scroll-distance="10"
-    v-slot="{ item }"
   >
-    <!-- <a-list v-bind="listConfig">
-      <template #renderItem="{ item }"> -->
-    <user-box
-      :user="item"
-      @itemClick="handleSelect"
-      :userSelected="userSelected"
-    ></user-box>
-    <!-- </template>
-    </a-list> -->
-  </RecycleScroller>
+    <template #="{ item }">
+      <user-box
+        :user="item"
+        @itemClick="handleSelect"
+        :userSelected="userSelected"
+      ></user-box>
+    </template>
+  </recycle-scroller>
 </template>
 
 <script setup lang="ts">

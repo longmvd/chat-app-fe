@@ -1,10 +1,10 @@
 <template>
   <div class="chat-home container flex flex-column h-screen">
-    <div class="w-4/12">
+    <div class="w-3/12">
       <chat-sidebar></chat-sidebar>
     </div>
-    <div class="w-8/12">
-      <chat-content></chat-content>
+    <div class="w-9/12">
+      <chat-content :user="{}"></chat-content>
     </div>
   </div>
 </template>

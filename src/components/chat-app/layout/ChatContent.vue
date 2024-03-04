@@ -1,47 +1,66 @@
 <template>
-  <div class="chat-content h-screen flex flex-row">
-    <RecycleScroller
-      class="user-list list-none flex-1"
+  <div class="chat-content h-screen flex flex-col">
+    <div class="chat-content-header flex border-b">
+      <div class="p-2">
+        <a-avatar :href="user?.Avatar" size="large"></a-avatar>
+      </div>
+    </div>
+    <dynamic-scroller
+      class="user-list list-none flex-1 mx-2"
       :items="messages"
-      :item-size="78"
+      :min-item-size="42"
       key-field="ID"
       :infinite-scroll-disabled="busy"
       :infinite-scroll-distance="10"
-      v-slot="{ item }"
     >
-      <div class="message-box flex text-sm">
-        <div
-          class="message-left p-1.5 rounded-full w-5/12"
-          :class="{
-            'flex items-center bg-slate-200': !isMyMessage(item.UserID),
-          }"
-        >
-          <div v-if="!isMyMessage(item.UserID)">{{ item.Content }}</div>
+      <template #before>
+        <div class="py-2 flex justify-center">
+          Hey! I'm a message displayed before the items!
         </div>
-        <div class="message-middle w-2/12"></div>
-        <div
-          class="message-right p-1.5 w-5/12"
-          :class="{
-            'flex items-center bg-blue-500 rounded-full text-white':
-              isMyMessage(item.UserID),
-          }"
-        >
-          <div v-if="isMyMessage(item.UserID)">{{ item.Content }}</div>
+      </template>
+      <template #="{ item }">
+        <div class="message-box flex text-sm">
+          <div
+            class="message-left py-1.5 px-2 rounded-full"
+            :class="{
+              'flex items-center bg-slate-200': !isMyMessage(item.UserID),
+              'flex-1': isMyMessage(item.UserID),
+            }"
+          >
+            <div v-if="!isMyMessage(item.UserID)">{{ item.Content }}</div>
+          </div>
+          <div class="message-middle w-2/12"></div>
+          <div
+            class="message-right py-1.5 px-2"
+            :class="{
+              'flex items-center bg-blue-500 rounded-full text-white':
+                isMyMessage(item.UserID),
+              'flex-1': !isMyMessage(item.UserID),
+            }"
+          >
+            <div v-if="isMyMessage(item.UserID)">{{ item.Content }}</div>
+          </div>
         </div>
-      </div>
-    </RecycleScroller>
-    <div class="edit-message">
-      <a-input v-bind="inputConfig"></a-input>
+      </template>
+    </dynamic-scroller>
+    <div class="toolbar-wrap">
+      <chat-toolbar></chat-toolbar>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Message } from '@/entities/message';
+import { User } from '@/entities/user';
 import { generateGUID } from '@/utils';
 import { InputProps } from 'ant-design-vue';
 import { reactive, ref } from 'vue';
-import { RecycleScroller } from 'vue-virtual-scroller';
+import { DynamicScroller } from 'vue-virtual-scroller';
+import ChatToolbar from '../content-components/ChatToolbar.vue';
+const props = defineProps<{
+  user: User;
+}>();
+
 const messages = reactive<Message[]>([
   {
     ID: generateGUID(),
@@ -63,6 +82,209 @@ const messages = reactive<Message[]>([
     CreatedDate: new Date(),
     Username: 'Long',
     UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'x',
+  },
+  {
+    ID: generateGUID(),
+    Content: 'Con cò be bé',
+    CreatedDate: new Date(),
+    Username: 'Long',
+    UserID: 'long',
   },
 ]);
 
